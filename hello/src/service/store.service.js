@@ -7,8 +7,12 @@ class StoreService{
     getAllStores()
     {
         return axios.get(BASE_API_URL + "/Store");
-
     }
+    
+    /*getPagination(pageindex, pagesize) {
+        return axios.get(`${BASE_API_URL}/Store/pagination?pageindex=${pageindex}&pagesize=${pagesize}`);
+      }
+    */
 }
 
 export default new StoreService();

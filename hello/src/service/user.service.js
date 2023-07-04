@@ -9,6 +9,15 @@ class UserService{
         return axios.get(BASE_API_URL + "/User");
 
     }
+
+    saveUser(user)
+    {
+        return axios.post(BASE_API_URL + "/User", user);
+    }
+
+    getAllRoles() {
+        return axios.get(BASE_API_URL + "/Role");
+      }
 }
 
 export default new UserService();

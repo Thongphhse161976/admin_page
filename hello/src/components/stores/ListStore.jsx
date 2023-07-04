@@ -2,8 +2,10 @@ import Header from '../Header'
 import SideBar from '../SideBar'
 import React, { useEffect, useState } from 'react'
 import storeService from '../../service/store.service'
+import ReactPaginate from 'react-paginate'
 const ListStore = () => {
     const [storeList, setStoreList] = useState([]);
+    const [searchTerm, setSearchTerm] = useState('');
 
     useEffect(() => {
         storeService.getAllStores().then((res) => {
@@ -16,6 +18,21 @@ const ListStore = () => {
         });
     }, []);
 
+    const handleSearch = (event) => {
+        setSearchTerm(event.target.value);
+    };
+
+    const filteredStores = storeList.filter((store) => {
+        return (
+            store.id.toString().toLowerCase().includes(searchTerm.toLowerCase()) ||
+            store.name.toString().toLowerCase().includes(searchTerm.toLowerCase()) ||
+            store.description.toString().toLowerCase().includes(searchTerm.toLowerCase()) ||
+            store.address.toString().toLowerCase().includes(searchTerm.toLowerCase()) ||
+            store.status.toString().toLowerCase().includes(searchTerm.toLowerCase()) ||
+            store.storeOwnerId.toString().toLowerCase().includes(searchTerm.toLowerCase())
+        );
+    });
+
     return (
         <>
             {/* Page Wrapper */}
@@ -23,19 +40,28 @@ const ListStore = () => {
 
             <div id="wrapper">
                 {/* Content Wrapper */}
-                <SideBar/>
+                <SideBar />
 
                 <div id="content-wrapper" class="d-flex flex-column">
                     {/* Main Content */}
 
                     <div id="content">
-                        <Header/>
+                        <Header />
                         <div class="container-fluid">
 
                             {/* Page Heading */}
 
                             <h1 class="h3 mb-2 text-gray-800">List Stores</h1>
-
+                            {/* Search Input */}
+                            <div className="mb-3">
+                                <input
+                                    type="text"
+                                    className="form-control"
+                                    placeholder="Search Stores"
+                                    value={searchTerm}
+                                    onChange={handleSearch}
+                                />
+                            </div>
 
                             {/* DataTales Example */}
 
@@ -45,27 +71,35 @@ const ListStore = () => {
                                         <table class="table table-bordered" id="" width="100%" cellspacing="0">
                                             <thead>
                                                 <tr>
-                                                    <th>Store Id</th>
                                                     <th>Photo</th>
+                                                    <th>Store Id</th>
                                                     <th>Name</th>
                                                     <th>Description</th>
                                                     <th>Address</th>
                                                     <th>Status</th>
                                                     <th>StoreOwnerId</th>
+                                                    <th>Edit</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 {
 
-                                                storeList.map((e) => (
-                                                        <tr>
-                                                            <td><img src={e.imageUrl} alt="Store Photo" /></td>
-                                                            <td key={e.id}>{e.id}</td>
-                                                            <td key={e.name}>{e.name}</td>
-                                                            <td key={e.description}>{e.description}</td>
-                                                            <td key={e.address}>{e.address}</td>
-                                                            <td key={e.status}>{e.status}</td>
-                                                            <td key={e.storeOwnerId}>{e.storeOwnerId}</td>
+                                                    filteredStores.map((store) => (
+                                                        <tr key={store.id}>
+                                                            <td>
+                                                                <img
+                                                                    src={store.imageUrl}
+                                                                    alt="Store Photo"
+                                                                    style={{ maxWidth: '100px', maxHeight: '100px' }}
+                                                                />
+                                                            </td>
+                                                            <td>{store.id}</td>
+                                                            <td>{store.name}</td>
+                                                            <td>{store.description}</td>
+                                                            <td>{store.address}</td>
+                                                            <td>{store.status}</td>
+                                                            <td>{store.storeOwnerId}</td>
+                                                            <td></td>
                                                         </tr>
                                                     ))
 
@@ -74,6 +108,7 @@ const ListStore = () => {
                                             </tbody>
                                         </table>
                                     </div>
+
                                 </div>
                             </div>
 

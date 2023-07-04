@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react'
 import paymentService from '../../service/payment.service'
 const ListPayment = () => {
     const [paymentList, setPaymentList] = useState([]);
+    const [searchTerm, setSearchTerm] = useState('');
 
     useEffect(() => {
         paymentService.getALlPayments().then((res) => {
@@ -16,6 +17,23 @@ const ListPayment = () => {
         });
     }, []);
 
+
+    const handleSearch = (event) => {
+        setSearchTerm(event.target.value);
+    };
+
+    const filteredPayments = paymentList.filter((payment) => {
+        return (
+            payment.id.toString().toLowerCase().includes(searchTerm.toLowerCase()) ||
+            payment.amount.toString().toLowerCase().includes(searchTerm.toLowerCase()) ||
+            payment.paymentDate.toString().toLowerCase().includes(searchTerm.toLowerCase()) ||
+            payment.method.toString().toLowerCase().includes(searchTerm.toLowerCase()) ||
+            payment.status.toString().toLowerCase().includes(searchTerm.toLowerCase()) ||
+            payment.orderId.toString().toLowerCase().includes(searchTerm.toLowerCase()) ||
+            payment.customerId.toString().toLowerCase().includes(searchTerm.toLowerCase())
+        );
+    });
+
     return (
         <>
             {/* Page Wrapper */}
@@ -23,19 +41,29 @@ const ListPayment = () => {
 
             <div id="wrapper">
                 {/* Content Wrapper */}
-                <SideBar/>
+                <SideBar />
 
                 <div id="content-wrapper" class="d-flex flex-column">
                     {/* Main Content */}
 
                     <div id="content">
-                        <Header/>
+                        <Header />
                         <div class="container-fluid">
 
                             {/* Page Heading */}
 
                             <h1 class="h3 mb-2 text-gray-800">List Payments</h1>
 
+                            {/* Search Input */}
+                            <div className="mb-3">
+                                <input
+                                    type="text"
+                                    className="form-control"
+                                    placeholder="Search Payments"
+                                    value={searchTerm}
+                                    onChange={handleSearch}
+                                />
+                            </div>
 
                             {/* DataTales Example */}
 
@@ -57,15 +85,15 @@ const ListPayment = () => {
                                             <tbody>
                                                 {
 
-                                                    paymentList.map((e) => (
-                                                        <tr>
-                                                            <td key={e.id}>{e.id}</td>
-                                                            <td key={e.amount}>{e.amount}</td>
-                                                            <td key={e.paymentDate}>{e.paymentDate}</td>
-                                                            <td key={e.method}>{e.method}</td>
-                                                            <td key={e.status}>{e.status}</td>
-                                                            <td key={e.orderId}>{e.orderId}</td>
-                                                            <td key={e.customerId}>{e.customerId}</td>
+                                                    filteredPayments.map((payment) => (
+                                                        <tr key={payment.id}>
+                                                            <td>{payment.id.toString()}</td>
+                                                            <td>{payment.amount.toString()}</td>
+                                                            <td>{payment.paymentDate.toString()}</td>
+                                                            <td>{payment.method.toString()}</td>
+                                                            <td>{payment.status.toString()}</td>
+                                                            <td>{payment.orderId.toString()}</td>
+                                                            <td>{payment.customerId.toString()}</td>
                                                         </tr>
                                                     ))
 

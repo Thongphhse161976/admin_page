@@ -27,7 +27,7 @@ const SideBar = () => {
                     Management
                 </div>
                 {/* Nav Item - Utilities Collapse Menu */}
-                {/* <li className="nav-item">
+                <li className="nav-item">
                     <a className="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilitiesdd" aria-expanded="true" aria-controls="collapseUtilities">
                         <i className="fas fa-box"/>
                         <span>Order </span>
@@ -66,7 +66,7 @@ const SideBar = () => {
                         </div>
                     </div>
 
-                </li> */}
+                </li>
 
                 <li className="nav-item">
                     <a className="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseStations" aria-expanded="true" aria-controls="collapsePages">
@@ -76,6 +76,11 @@ const SideBar = () => {
                     <div id="collapseStations" className="collapse" aria-labelledby="headingStation" data-parent="#accordionSidebar">
                         <div className="bg-white py-2 collapse-inner rounded">
                             <Link className="collapse-item" to="/list_stores">List Stores</Link>
+                        </div>
+                    </div>
+                    <div id="collapseStations" className="collapse" aria-labelledby="headingStation" data-parent="#accordionSidebar">
+                        <div className="bg-white py-2 collapse-inner rounded">
+                            <Link className="collapse-item" to="/add_store">Add Store</Link>
                         </div>
                     </div>
                 </li>
@@ -90,6 +95,11 @@ const SideBar = () => {
                     <div id="collapseTwo" className="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                         <div className="bg-white py-2 collapse-inner rounded">
                             <Link className="collapse-item" to="/list_users">List Users</Link>
+                        </div>
+                    </div>
+                    <div id="collapseTwo" className="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                        <div className="bg-white py-2 collapse-inner rounded">
+                            <Link className="collapse-item" to="/add_user">Add User</Link>
                         </div>
                     </div>
                 </li>

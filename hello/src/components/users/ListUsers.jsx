@@ -6,6 +6,7 @@ const ListUsers = () => {
 
 
     const [userList, setUserList] = useState([]);
+    const [searchTerm, setSearchTerm] = useState('');
 
     useEffect(() => {
         userService.getAllUsers().then((res) => {
@@ -17,6 +18,23 @@ const ListUsers = () => {
             console.log('lol');
         });
     }, []);
+
+
+    const handleSearch = (event) => {
+        setSearchTerm(event.target.value);
+    };
+
+    const filteredUsers = userList.filter((user) => {
+        return (
+            user.id.toString().toLowerCase().includes(searchTerm.toLowerCase()) ||
+            user.name.toString().toLowerCase().includes(searchTerm.toLowerCase()) ||
+            user.email.toString().toLowerCase().includes(searchTerm.toLowerCase()) ||
+            user.firebaseUID.toString().toLowerCase().includes(searchTerm.toLowerCase()) ||
+            user.status.toString().toLowerCase().includes(searchTerm.toLowerCase()) ||
+            user.roleId.toString().toLowerCase().includes(searchTerm.toLowerCase()) 
+            // user.storeId.toString().toLowerCase().includes(searchTerm.toLowerCase())
+        );
+    });
 
     return (
         <>
@@ -37,7 +55,16 @@ const ListUsers = () => {
 
                             <h1 class="h3 mb-2 text-gray-800">List Users</h1>
 
-
+                            {/* Search Input */}
+                            <div className="mb-3">
+                                <input
+                                    type="text"
+                                    className="form-control"
+                                    placeholder="Search Users"
+                                    value={searchTerm}
+                                    onChange={handleSearch}
+                                />
+                            </div>
                             {/* DataTales Example */}
 
                             <div class="card shadow mb-4">
@@ -48,6 +75,7 @@ const ListUsers = () => {
                                                 <tr>
                                                     <th>User Id</th>
                                                     <th>Photo</th>
+                                                    <th>Name</th>
                                                     <th>Email</th>
                                                     <th>Firebase Id</th>
                                                     <th>Status</th>
@@ -58,17 +86,18 @@ const ListUsers = () => {
 
                                             <tbody>
                                                 {
-
-                                                    userList.map((e) => (
-
-                                                        <tr>
-                                                            <td key={e.id}>{e.id}</td>
-                                                            <td><img src={e.photoUrl} alt="User Photo" /></td>
-                                                            <td key={e.email}>{e.email}</td>
-                                                            <td key={e.firebaseUID}>{e.firebaseUID}</td>
-                                                            <td key={e.status}>{e.status}</td>
-                                                            <td key={e.roleId}>{e.roleId}</td>
-                                                            <td key={e.storeId}>{e.storeId}</td>
+                                                    filteredUsers.map((user) => (
+                                                        <tr key={user.id}>
+                                                            <td>{user.id}</td>
+                                                            <td>
+                                                                <img src={user.photoUrl} alt="User Photo" />
+                                                            </td>
+                                                            <td>{user.name}</td>
+                                                            <td>{user.email}</td>
+                                                            <td>{user.firebaseUID}</td>
+                                                            <td>{user.status}</td>
+                                                            <td>{user.roleId}</td>
+                                                            <td>{user.storeId}</td>
                                                         </tr>
                                                     ))
 

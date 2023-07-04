@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react'
 import reviewService from '../../service/review.service'
 const ListReview = () => {
     const [reviewList, setReviewList] = useState([]);
+    const [searchTerm, setSearchTerm] = useState('');
 
     useEffect(() => {
         reviewService.getAllReviews().then((res) => {
@@ -15,6 +16,20 @@ const ListReview = () => {
             console.log('lol');
         });
     }, []);
+
+    const handleSearch = (event) => {
+        setSearchTerm(event.target.value);
+    };
+
+    const filteredReviews = reviewList.filter((review) => {
+        return (
+            review.id.toString().toLowerCase().includes(searchTerm.toLowerCase()) ||
+            review.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            review.content.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            review.productId.toString().toLowerCase().includes(searchTerm.toLowerCase()) ||
+            review.userId.toString().toLowerCase().includes(searchTerm.toLowerCase())
+        );
+    });
 
     return (
         <>
@@ -37,6 +52,16 @@ const ListReview = () => {
                             <h1 class="h3 mb-2 text-gray-800">List Reviews</h1>
 
 
+                            {/* Search Input */}
+                            <div className="mb-3">
+                                <input
+                                    type="text"
+                                    className="form-control"
+                                    placeholder="Search Reviews"
+                                    value={searchTerm}
+                                    onChange={handleSearch}
+                                />
+                            </div>
                             {/* DataTales Example */}
 
                             <div class="card shadow mb-4">
@@ -55,15 +80,15 @@ const ListReview = () => {
                                             <tbody>
                                                 {
 
-                                                    reviewList.map((e) => (
-                                                        <tr>
-                                                            <td key={e.id}>{e.id}</td>
-                                                            <td key={e.title}>{e.title}</td>
-                                                            <td key={e.content}>
-                                                                <div>{e.content}</div>
+                                                    filteredReviews.map((review) => (
+                                                        <tr key={review.id}>
+                                                            <td>{review.id.toString()}</td>
+                                                            <td>{review.title}</td>
+                                                            <td>
+                                                                <div>{review.content}</div>
                                                             </td>
-                                                            <td key={e.productId}>{e.productId}</td>
-                                                            <td key={e.userId}>{e.userId}</td>
+                                                            <td>{review.productId}</td>
+                                                            <td>{review.userId.toString()}</td>
                                                         </tr>
                                                     ))
 
