@@ -5,7 +5,10 @@ import SideBar from "./SideBar";
 import orderService from "../service/order.service";
 const Home = () => {
 
+
+  //tinh tong order
   const [orderCount, setOrderCount] = useState(0);
+  const [sumForCurrentMonth, setSumForCurrentMonth] = useState(0);
 
   useEffect(() => {
     countOrders();
@@ -25,6 +28,46 @@ const Home = () => {
     }
   }
 
+  //Income by month
+  const fetchOrdersAndCalculateSum = async () => {
+    try {
+      const response = await orderService.getAllOrders();
+      const orders = response.data;
+  
+      const sumForCurrentMonth = calculateSumByMonth(orders);
+      setSumForCurrentMonth(sumForCurrentMonth);
+      console.log("Sum for current month:", sumForCurrentMonth);
+    } catch (error) {
+      console.error("Error fetching orders:", error);
+    }
+  };
+  
+  fetchOrdersAndCalculateSum();
+  
+  const calculateSumByMonth = (orders) => {
+    // Get the current month
+    const currentDate = new Date();
+    const currentMonth = currentDate.getMonth();
+  
+    // Initialize the sum for the current month
+    let sumForCurrentMonth = 0;
+  
+    // Iterate over each order
+    orders.forEach((order) => {
+      // Extract the month from the order date
+      const orderMonth = new Date(order.orderDate).getMonth();
+  
+      // Check if the order belongs to the current month
+      if (orderMonth === currentMonth) {
+        sumForCurrentMonth += order.total;
+      }
+    });
+  
+    return sumForCurrentMonth;
+  };
+  
+  
+  //Income by year
   return (
     <>
       {/* Page Wrapper */}
@@ -57,7 +100,7 @@ const Home = () => {
                           <div className="col mr-2">
                             <div className="text-xs font-weight-bold text-primary text-uppercase mb-1">
                               Earnings (Monthly)</div>
-                            <div className="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
+                            <div className="h5 mb-0 font-weight-bold text-gray-800"> ${sumForCurrentMonth.toFixed(2)}</div>
                           </div>
                           <div className="col-auto">
                             <i className="fas fa-calendar fa-2x text-gray-300" />
