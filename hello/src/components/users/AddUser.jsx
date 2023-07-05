@@ -7,6 +7,7 @@ const AddUser = () => {
 
     const [roles, setRoles] = useState([]);
 
+
     const [user, setUser] = useState({
         name: "",
         email: "",
@@ -17,18 +18,35 @@ const AddUser = () => {
     });
 
     const handleChange = (e) => {
-        const value = e.target.value;
-        setUser({ ...user, [e.target.name]: value });
-    }
+        const { name, value } = e.target;
+        setUser({ ...user, [name]: value });
+        setErrors({ ...errors, [name]: '' }); // Clear the validation error for the current field
+    };
+
+    const validateForm = () => {
+        let isValid = true;
+        const newErrors = {};
+
+        if (user.name.trim() === '') {
+            newErrors.name = 'Name is required.';
+            isValid = false;
+        }
+
+        setErrors(newErrors);
+        return isValid;
+    };
 
     const submitUser = (e) => {
         e.preventDefault();
+        if (!validateForm()) {
+            return; // Don't submit if the form is not valid
+        }
         console.log(user);
 
         let parsedUser = {
             ...user,
             status: parseInt(user.status)
-          };
+        };
 
         userService.saveUser(parsedUser)
             .then((s) => {
@@ -46,17 +64,17 @@ const AddUser = () => {
 
     useEffect(() => {
         const fetchRoles = async () => {
-          try {
-            const response = await userService.getAllRoles();
-            console.log('Roles fetched successfully:', response.data);
-            setRoles(response.data);
-          } catch (error) {
-            console.error('Error fetching roles:', error);
-          }
+            try {
+                const response = await userService.getAllRoles();
+                console.log('Roles fetched successfully:', response.data);
+                setRoles(response.data);
+            } catch (error) {
+                console.error('Error fetching roles:', error);
+            }
         };
-    
+
         fetchRoles();
-      }, []);
+    }, []);
     return (
         <>
             <div id="wrapper">
@@ -80,15 +98,16 @@ const AddUser = () => {
                                     {/* Name field */}
                                     <div className="form-group">
                                         <label htmlFor="exampleInputEmail1">Name</label>
-                                        <input type="text" name="name" className="form-control" 
-                                        id="exampleInputEmail1" aria-describedby="emailHelp" value={user.name} onChange={(e) => handleChange(e)} />
+                                        <input type="text" name="name" className="form-control"
+                                            id="exampleInputEmail1" aria-describedby="emailHelp" value={user.name} onChange={(e) => handleChange(e)} />
+                                         {errors.name && <p className="text-danger">{errors.name}</p>}
                                     </div>
 
                                     {/* Email field */}
                                     <div className="form-group">
                                         <label htmlFor="exampleInputPassword1">Email</label>
                                         <input type="email" name="email" className="form-control" id="exampleInputPassword1"
-                                        value={user.email} onChange={(e) => handleChange(e)} />
+                                            value={user.email} onChange={(e) => handleChange(e)} />
                                     </div>
 
                                     {/* Status field */}
@@ -112,7 +131,7 @@ const AddUser = () => {
                                             ))}
                                         </select>
                                     </div>
-                                      {/* <div className="form-group">
+                                    {/* <div className="form-group">
                                         <label htmlFor="exampleInputPassword1">Role</label>
                                         <input type="number" name="roleId" className="form-control" id="exampleInputPassword1" />
                                     </div> */}
@@ -120,11 +139,11 @@ const AddUser = () => {
                                     {/* Photo field */}
                                     <div className="form-group">
                                         <label htmlFor="exampleInputPassword1">Photo</label>
-                                        <input type="text" name="photoUrl" className="form-control" id="exampleInputPassword1" 
-                                        value={user.photoUrl} onChange={(e) => handleChange(e)}/>
+                                        <input type="text" name="photoUrl" className="form-control" id="exampleInputPassword1"
+                                            value={user.photoUrl} onChange={(e) => handleChange(e)} />
                                     </div>
 
-                                    <input type='text' name='firebaseUID'  value={user.firebaseUID} onChange={(e) => handleChange(e)} />
+                                    <input type='hidden' name='firebaseUID' value={user.firebaseUID} onChange={(e) => handleChange(e)} />
 
                                     <button type="submit" className="btn btn-primary">Save</button>
                                 </div>
