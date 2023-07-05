@@ -9,6 +9,7 @@ const Home = () => {
   //tinh tong order
   const [orderCount, setOrderCount] = useState(0);
   const [sumForCurrentMonth, setSumForCurrentMonth] = useState(0);
+  const [sumForCurrentYear, setSumForCurrentYear] = useState(0);
 
   useEffect(() => {
     countOrders();
@@ -65,9 +66,47 @@ const Home = () => {
   
     return sumForCurrentMonth;
   };
-  
+
   
   //Income by year
+  const fetchOrdersAndCalculateSum1 = async () => {
+    try {
+      const response = await orderService.getAllOrders();
+      const orders = response.data;
+  
+      const sumForCurrentYear = calculateSumByYear(orders);
+      setSumForCurrentYear(sumForCurrentYear);
+      console.log("Sum for current year:", sumForCurrentYear);
+    } catch (error) {
+      console.error("Error fetching orders:", error);
+    }
+  };
+  
+  fetchOrdersAndCalculateSum1();
+
+  const calculateSumByYear = (orders) => {
+    // Get the current year
+    const currentDate = new Date();
+    const currentYear = currentDate.getFullYear();
+  
+    // Initialize the sum for the current year
+    let sumForCurrentYear = 0;
+  
+    // Iterate over each order
+    orders.forEach((order) => {
+      // Extract the year from the order date
+      const orderYear = new Date(order.orderDate).getFullYear();
+  
+      // Check if the order belongs to the current year
+      if (orderYear === currentYear) {
+        sumForCurrentYear += order.total;
+      }
+    });
+  
+    return sumForCurrentYear;
+  };
+  
+  
   return (
     <>
       {/* Page Wrapper */}
@@ -117,7 +156,7 @@ const Home = () => {
                           <div className="col mr-2">
                             <div className="text-xs font-weight-bold text-success text-uppercase mb-1">
                               Earnings (Annual)</div>
-                            <div className="h5 mb-0 font-weight-bold text-gray-800">$215,000</div>
+                            <div className="h5 mb-0 font-weight-bold text-gray-800">${sumForCurrentYear.toFixed(2)}</div>
                           </div>
                           <div className="col-auto">
                             <i className="fas fa-dollar-sign fa-2x text-gray-300" />
