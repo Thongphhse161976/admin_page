@@ -12,7 +12,18 @@ class UserService{
 
     saveUser(user)
     {
-        return axios.post(BASE_API_URL + "/User", user);
+        return axios.post(BASE_API_URL + "/User", user, {
+            headers: {
+                'Access-Control-Allow-Origin': '*',
+            }
+        }
+        ).then((response) => {
+            response.headers = {
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Headers": "Content-Type",
+                "Access-Control-Allow-Methods": "GET, POST, OPTION",
+            }
+        });
     }
 
     getAllRoles() {

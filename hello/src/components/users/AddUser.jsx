@@ -25,9 +25,14 @@ const AddUser = () => {
         e.preventDefault();
         console.log(user);
 
-        userService.saveUser(user)
-            .then((response) => {
-                console.log('User saved successfully:', response.data);
+        let parsedUser = {
+            ...user,
+            status: parseInt(user.status)
+          };
+
+        userService.saveUser(parsedUser)
+            .then((s) => {
+                console.log('User saved successfully:', s.data);
                 setMsg('User saved successfully');
             })
             .catch((error) => {
