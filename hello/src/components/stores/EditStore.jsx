@@ -4,7 +4,7 @@ import Header from '../Header'
 import storeService from '../../service/store.service'
 import userService from '../../service/user.service'
 
-const AddStore = () => {
+const EditStore = () => {
 
     const [users, setUsers] = useState([]);
 
@@ -81,8 +81,10 @@ const AddStore = () => {
         setSelectedValue(event.target.value);
     };
 
+    // const { busId } = useParams();
     //combobox owner
     useEffect(() => {
+        
         const fetchUsers = async () => {
             try {
                 const response = await userService.getAllUsers();
@@ -100,9 +102,6 @@ const AddStore = () => {
 
         fetchUsers();
     }, []);
-
-
-
 
     return (
         <>
@@ -190,4 +189,4 @@ const AddStore = () => {
     )
 }
 
-export default AddStore
+export default EditStore

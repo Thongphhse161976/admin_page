@@ -3,6 +3,7 @@ import Header from '../Header';
 import SideBar from '../SideBar';
 import storeService from '../../service/store.service';
 import ReactPaginate from 'react-paginate';
+import { Link } from 'react-router-dom';
 
 const ListStore = () => {
   const [storeList, setStoreList] = useState([]);
@@ -61,16 +62,16 @@ const ListStore = () => {
             <div className="container-fluid">
               {/* Page Heading */}
               <h1 className="h3 mb-2 text-gray-800">List Stores</h1>
-              {/* Search Input */}
-              <div className="mb-3">
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="Search Stores"
-                  value={searchTerm}
-                  onChange={handleSearch}
-                />
-              </div>
+                {/* Search Input */}
+                <div className="mb-3">
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder="Search Stores"
+                    value={searchTerm}
+                    onChange={handleSearch}
+                  />
+                </div>
 
               {/* DataTales Example */}
               <div className="card shadow mb-4">
@@ -86,7 +87,7 @@ const ListStore = () => {
                           <th>Address</th>
                           <th>Status</th>
                           <th>StoreOwnerId</th>
-                          <th>Edit</th>
+                          {/* <th>Edit</th> */}
                         </tr>
                       </thead>
                       <tbody>
@@ -105,7 +106,9 @@ const ListStore = () => {
                             <td>{store.address}</td>
                             <td>{store.status}</td>
                             <td>{store.storeOwnerId}</td>
-                            <td></td>
+                            {/* <td>
+                              <Link to={`/edit_store/${store.id}`} className='btn btn-warning'>Edit</Link>
+                            </td> */}
                           </tr>
                         ))}
                       </tbody>

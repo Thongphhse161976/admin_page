@@ -1,4 +1,4 @@
-import {React, useState, useEffect} from "react";
+import { React, useState, useEffect } from "react";
 import App from "../App";
 import Header from "./Header";
 import SideBar from "./SideBar";
@@ -9,6 +9,7 @@ const Home = () => {
   //tinh tong order
   const [orderCount, setOrderCount] = useState(0);
   const [sumForCurrentMonth, setSumForCurrentMonth] = useState(0);
+  const [sumForPreviousMonth, setSumForPreviousMonth] = useState(0);
   const [sumForCurrentYear, setSumForCurrentYear] = useState(0);
 
   useEffect(() => {
@@ -34,7 +35,7 @@ const Home = () => {
     try {
       const response = await orderService.getAllOrders();
       const orders = response.data;
-  
+
       const sumForCurrentMonth = calculateSumByMonth(orders);
       setSumForCurrentMonth(sumForCurrentMonth);
       console.log("Sum for current month:", sumForCurrentMonth);
@@ -42,38 +43,38 @@ const Home = () => {
       console.error("Error fetching orders:", error);
     }
   };
-  
+
   fetchOrdersAndCalculateSum();
-  
+
   const calculateSumByMonth = (orders) => {
     // Get the current month
     const currentDate = new Date();
     const currentMonth = currentDate.getMonth();
-  
+
     // Initialize the sum for the current month
     let sumForCurrentMonth = 0;
-  
+
     // Iterate over each order
     orders.forEach((order) => {
       // Extract the month from the order date
       const orderMonth = new Date(order.orderDate).getMonth();
-  
+
       // Check if the order belongs to the current month
       if (orderMonth === currentMonth) {
         sumForCurrentMonth += order.total;
       }
     });
-  
+
     return sumForCurrentMonth;
   };
 
-  
+
   //Income by year
   const fetchOrdersAndCalculateSum1 = async () => {
     try {
       const response = await orderService.getAllOrders();
       const orders = response.data;
-  
+
       const sumForCurrentYear = calculateSumByYear(orders);
       setSumForCurrentYear(sumForCurrentYear);
       console.log("Sum for current year:", sumForCurrentYear);
@@ -81,32 +82,77 @@ const Home = () => {
       console.error("Error fetching orders:", error);
     }
   };
-  
+
   fetchOrdersAndCalculateSum1();
 
   const calculateSumByYear = (orders) => {
     // Get the current year
     const currentDate = new Date();
     const currentYear = currentDate.getFullYear();
-  
+
     // Initialize the sum for the current year
     let sumForCurrentYear = 0;
-  
+
     // Iterate over each order
     orders.forEach((order) => {
       // Extract the year from the order date
       const orderYear = new Date(order.orderDate).getFullYear();
-  
+
       // Check if the order belongs to the current year
       if (orderYear === currentYear) {
         sumForCurrentYear += order.total;
       }
     });
-  
+
     return sumForCurrentYear;
   };
-  
-  
+
+  //Income previous month
+  const calculateSumByPreviousMonth = (orders) => {
+    // Get the current date
+    const currentDate = new Date();
+
+    // Calculate the previous month
+    let previousMonth = currentDate.getMonth() - 1;
+
+    // Adjust the month if the previous month was in the previous year
+    if (previousMonth < 0) {
+      previousMonth = 11;
+    }
+
+    // Initialize the sum for the previous month
+    let sumForPreviousMonth = 0;
+
+    // Iterate over each order
+    orders.forEach((order) => {
+      // Extract the month from the order date
+      const orderMonth = new Date(order.orderDate).getMonth();
+
+      // Check if the order belongs to the previous month
+      if (orderMonth === previousMonth) {
+        sumForPreviousMonth += order.total;
+      }
+    });
+
+    return sumForPreviousMonth;
+  };
+  const fetchOrdersAndCalculateSum3 = async () => {
+    try {
+      const response = await orderService.getAllOrders();
+      const orders = response.data;
+
+      const sumForPreviousMonth = calculateSumByPreviousMonth(orders);
+      setSumForPreviousMonth(sumForPreviousMonth);
+      console.log("Sum for previous month:", sumForPreviousMonth);
+    } catch (error) {
+      console.error("Error fetching orders:", error);
+    }
+  };
+
+  fetchOrdersAndCalculateSum3();
+
+
+
   return (
     <>
       {/* Page Wrapper */}
@@ -177,7 +223,7 @@ const Home = () => {
                               <div className="col-auto">
                                 <div className="h5 mb-0 mr-3 font-weight-bold text-gray-800">{orderCount}</div>
                               </div>
-                              
+
                             </div>
                           </div>
                           <div className="col-auto">
@@ -213,18 +259,6 @@ const Home = () => {
                       {/* Card Header - Dropdown */}
                       <div className="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                         <h6 className="m-0 font-weight-bold text-primary">Earnings Overview</h6>
-                        <div className="dropdown no-arrow">
-                          <a className="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i className="fas fa-ellipsis-v fa-sm fa-fw text-gray-400" />
-                          </a>
-                          <div className="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
-                            <div className="dropdown-header">Dropdown Header:</div>
-                            <a className="dropdown-item" href="#">Action</a>
-                            <a className="dropdown-item" href="#">Another action</a>
-                            <div className="dropdown-divider" />
-                            <a className="dropdown-item" href="#">Something else here</a>
-                          </div>
-                        </div>
                       </div>
                       {/* Card Body */}
                       <div className="card-body">
@@ -235,53 +269,38 @@ const Home = () => {
                     </div>
                   </div>
                   {/* Pie Chart */}
-                  <div className="col-xl-4 col-lg-5">
-                    <div className="card shadow mb-4">
-                      {/* Card Header - Dropdown */}
-                      <div className="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                        <h6 className="m-0 font-weight-bold text-primary">Revenue Sources</h6>
-                        <div className="dropdown no-arrow">
-                          <a className="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i className="fas fa-ellipsis-v fa-sm fa-fw text-gray-400" />
-                          </a>
-                          <div className="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
-                            <div className="dropdown-header">Dropdown Header:</div>
-                            <a className="dropdown-item" href="#">Action</a>
-                            <a className="dropdown-item" href="#">Another action</a>
-                            <div className="dropdown-divider" />
-                            <a className="dropdown-item" href="#">Something else here</a>
-                          </div>
-                        </div>
+                  <div class="col-xl-4 col-lg-5">
+                    <div class="card shadow mb-4">
+                      <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                        <h6 class="m-0 font-weight-bold text-primary">Income Comparation</h6>
                       </div>
-                      {/* Card Body */}
-                      <div className="card-body">
-                        <div className="chart-pie pt-4 pb-2">
-                          <canvas id="myPieChart" />
+                      <div class="card-body">
+                        <div class="chart-pie pt-4 pb-2">
+                          <canvas id="myPieChart2"></canvas>
                         </div>
-                        <div className="mt-4 text-center small">
-                          <span className="mr-2">
-                            <i className="fas fa-circle text-primary" /> Direct
+                        <div class="mt-4 text-center small">
+                          <span class="mr-2">
+                            <i class="fas fa-circle text-primary"></i> Previous month
                           </span>
-                          <span className="mr-2">
-                            <i className="fas fa-circle text-success" /> Social
+                          <span class="mr-2">
+                            <i class="fas fa-circle text-success"></i> This month
                           </span>
-                          <span className="mr-2">
-                            <i className="fas fa-circle text-info" /> Referral
-                          </span>
+
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              
+
               </div>
 
             </div>
+
           </div>
         </div>
-
-
       </div>
+
+
     </>
   );
 };

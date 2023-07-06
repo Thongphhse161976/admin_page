@@ -95,7 +95,7 @@ const ListUsers = () => {
                           <tr key={user.id}>
                             <td>{user.id}</td>
                             <td>
-                              <img src={user.photoUrl} alt="User Photo" />
+                              <img src={user.photoUrl} alt="User Photo" className='img-responsive' style={{width: '60px' , height: '75px'}} />
                             </td>
                             <td>{user.name}</td>
                             <td>{user.email}</td>

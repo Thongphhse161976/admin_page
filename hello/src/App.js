@@ -11,6 +11,7 @@ import ListReview from './components/reviews/ListReview';
 import ListCategories from './components/categories/ListCategories';
 import AddStore from './components/stores/AddStore';
 import AddUser from './components/users/AddUser';
+import EditStore from './components/stores/EditStore';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
         <Route path='/list_orders' element={<ListOrders />}></Route>
         <Route path='/list_stores' element={<ListStore />}></Route>
         <Route path='/add_store' element={<AddStore />}></Route>
+        <Route path='/edit_store/:storeId' element={<EditStore />}></Route>
         <Route path='/list_payments' element={<ListPayment />}></Route>
         <Route path='/list_reviews' element={<ListReview />}></Route>
         <Route path='/list_categories' element={<ListCategories />}></Route>
