@@ -22,6 +22,7 @@ function App() {
         <Route path='/list_users' element={<ListUsers />}></Route>
         <Route path='/add_user' element={<AddUser />}></Route>
         <Route path='/list_orders' element={<ListOrders />}></Route>
+        <Route path='/list_categories' element={<ListCategories />}></Route>
         <Route path='/list_stores' element={<ListStore />}></Route>
         <Route path='/add_store' element={<AddStore />}></Route>
         <Route path='/edit_store/:storeId' element={<EditStore />}></Route>
