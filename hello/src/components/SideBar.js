@@ -4,11 +4,11 @@ const SideBar = () => {
     return (
         <>
             {/* Sidebar */}
-            <ul className="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+            <ul className="navbar-nav bg-gradient-success sidebar sidebar-dark accordion" id="accordionSidebar">
                 {/* Sidebar - Brand */}
                 <Link className="sidebar-brand d-flex align-items-center justify-content-center" to="/">
                     <div className="sidebar-brand-icon rotate-n-15">
-                        <i className="fas fa-laugh-wink" />
+                        <i className="fas fa-regular fa-store" />
                     </div>
                     <div className="sidebar-brand-text mx-3">Admin</div>
                 </Link>
@@ -56,7 +56,7 @@ const SideBar = () => {
 
                 <li className="nav-item">
                     <a className="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilitiesddd" aria-expanded="true" aria-controls="collapseUtilities">
-                        <i className="fas fa-box"/>
+                        <i class="fas fa-pizza-slice"></i>
                         <span>Category </span>
                     </a>
                     <div id="collapseUtilitiesddd" className="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
@@ -64,7 +64,11 @@ const SideBar = () => {
                             <Link className="collapse-item" to="/list_categories">List Categories</Link>
                         </div>
                     </div>
-
+                    <div id="collapseUtilitiesddd" className="collapse" aria-labelledby="headingCategory" data-parent="#accordionSidebar">
+                        <div className="bg-white py-2 collapse-inner rounded">
+                            <Link className="collapse-item" to="/add_category">Add Category</Link>
+                        </div>
+                    </div>
                 </li>
 
                 <li className="nav-item">
