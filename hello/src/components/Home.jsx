@@ -1,10 +1,14 @@
-import { React, useState, useEffect } from "react";
+import { React, useState, useEffect, useRef } from "react";
 import App from "../App";
 import Header from "./Header";
 import SideBar from "./SideBar";
 import orderService from "../service/order.service";
-const Home = () => {
+import { Chart, PieController, ArcElement } from "chart.js";
 
+
+const Home = () => {
+  Chart.register(PieController, ArcElement);
+  const pieChartRef = useRef(null);
 
   //tinh tong order
   const [orderCount, setOrderCount] = useState(0);
@@ -15,6 +19,15 @@ const Home = () => {
   useEffect(() => {
     countOrders();
   }, []);
+
+  useEffect(() => {
+    if (sumForCurrentMonth !== 0 && sumForPreviousMonth !== 0) {
+      createPieChart();
+    }
+  }, [sumForCurrentMonth, sumForPreviousMonth]);
+  console.log('thang nay' + sumForCurrentMonth);
+  console.log('thang truoc' + sumForPreviousMonth);
+
 
   async function countOrders() {
     try {
@@ -151,6 +164,51 @@ const Home = () => {
 
   fetchOrdersAndCalculateSum3();
 
+  const createPieChart = () => {
+    const pieChartCanvas = pieChartRef.current.getContext("2d");
+  
+    if (pieChartRef.current.chart) {
+      pieChartRef.current.chart.destroy();
+    }
+  
+    pieChartRef.current.chart = new Chart(pieChartCanvas, {
+      type: "pie",
+      data: {
+        labels: ["Previous Month", "Current Month"],
+        datasets: [
+          {
+            data: [sumForPreviousMonth, sumForCurrentMonth],
+            backgroundColor: ["#088F8F", "#7CFC00"],
+            hoverBackgroundColor: ["#0047AB", "#008000"],
+            borderWidth: 0, // Remove the border
+          },
+        ],
+      },
+      options: {
+        plugins: {
+          legend: {
+            display: true, // Hide the legend
+          },
+          tooltip: {
+            enabled: true,
+            callbacks: {
+              label: (context) => {
+                const labelIndex = context.dataIndex;
+                if (labelIndex === 0) {
+                  return `Previous Month: $${sumForPreviousMonth.toFixed(2)}`;
+                } else if (labelIndex === 1) {
+                  return `Current Month: $${sumForCurrentMonth.toFixed(2)}`;
+                }
+                return '';
+              },
+            },
+          },
+        },
+      },
+    });
+  };
+  
+  
 
 
   return (
@@ -170,7 +228,7 @@ const Home = () => {
             <div className="container-fluid">
               <div class="d-sm-flex align-items-center justify-content-between mb-4">
                 <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
-                <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm"><i
                   class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
               </div>
 
@@ -258,7 +316,7 @@ const Home = () => {
                     <div className="card shadow mb-4">
                       {/* Card Header - Dropdown */}
                       <div className="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                        <h6 className="m-0 font-weight-bold text-primary">Earnings Overview</h6>
+                        <h6 className="m-0 font-weight-bold text-success">Earnings Overview</h6>
                       </div>
                       {/* Card Body */}
                       <div className="card-body">
@@ -269,27 +327,27 @@ const Home = () => {
                     </div>
                   </div>
                   {/* Pie Chart */}
-                  <div class="col-xl-4 col-lg-5">
+                  <div class="col-xl-4 col-lg-5 d-flex align-items-center ">
                     <div class="card shadow mb-4">
                       <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                        <h6 class="m-0 font-weight-bold text-primary">Income Comparation</h6>
+                        <h6 class="m-0 font-weight-bold text-success">Income Comparison</h6>
                       </div>
                       <div class="card-body">
-                        <div class="chart-pie pt-4 pb-2">
-                          <canvas id="myPieChart2"></canvas>
+                        <div className="chart-pie pt-4 pb-2">
+                          <canvas ref={pieChartRef} id="myPieChart3"></canvas>
                         </div>
                         <div class="mt-4 text-center small">
                           <span class="mr-2">
-                            <i class="fas fa-circle text-primary"></i> Previous month
+                            <i class="fas fa-circle" style={{ color: "#088F8F" }}></i> Previous month
                           </span>
                           <span class="mr-2">
-                            <i class="fas fa-circle text-success"></i> This month
+                            <i class="fas fa-circle " style={{ color: "#7CFC00" }}></i> This month
                           </span>
-
                         </div>
                       </div>
                     </div>
                   </div>
+
                 </div>
 
               </div>
@@ -306,4 +364,6 @@ const Home = () => {
 };
 
 export default Home;
+
+
 

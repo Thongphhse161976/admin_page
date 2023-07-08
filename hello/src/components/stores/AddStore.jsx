@@ -178,7 +178,7 @@ const AddStore = () => {
                                             {errors.imageUrl && <p className="text-danger">{errors.imageUrl}</p>}
                                     </div>
 
-                                    <button type="submit" className="btn btn-primary">Save</button>
+                                    <button type="submit" className="btn btn-success">Save</button>
                                 </div>
                             </form>
                         </div>

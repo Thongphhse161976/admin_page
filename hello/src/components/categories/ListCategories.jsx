@@ -117,6 +117,7 @@ const ListCategories = () => {
                                 nextLinkClassName={'page-link'}
                                 breakLinkClassName={'page-link'}
                                 pageLinkClassName={'page-link'}
+                        
                             />
                         </div>
                         {/* /.container-fluid */}

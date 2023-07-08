@@ -145,7 +145,7 @@ const AddUser = () => {
 
                                     <input type='hidden' name='firebaseUID' value={user.firebaseUID} onChange={(e) => handleChange(e)} />
 
-                                    <button type="submit" className="btn btn-primary">Save</button>
+                                    <button type="submit" className="btn btn-success">Save</button>
                                 </div>
                             </form>
                         </div>

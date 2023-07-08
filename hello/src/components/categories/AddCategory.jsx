@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import SideBar from '../SideBar'
 import Header from '../Header'
 import categoryService from '../../service/category.service'
@@ -82,7 +82,7 @@ const AddCategory = () => {
                                         <input type="text" name="description" className="form-control" id="exampleInputDescription"
                                             value={category.email} onChange={(e) => handleChange(e)} />
                                     </div>
-                                    <button type="submit" className="btn btn-primary">Save</button>
+                                    <button type="submit" className="btn btn-success">Save</button>
                                 </div>
                             </form>
                         </div>
