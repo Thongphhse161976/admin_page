@@ -3,11 +3,12 @@ import App from "../App";
 import Header from "./Header";
 import SideBar from "./SideBar";
 import orderService from "../service/order.service";
-import { Chart, PieController, ArcElement } from "chart.js";
+import { Chart, PieController, ArcElement, registerables } from "chart.js";
 
 
 const Home = () => {
   Chart.register(PieController, ArcElement);
+  Chart.register(...registerables);
   const pieChartRef = useRef(null);
 
   //tinh tong order
@@ -171,44 +172,45 @@ const Home = () => {
       pieChartRef.current.chart.destroy();
     }
   
-    pieChartRef.current.chart = new Chart(pieChartCanvas, {
-      type: "pie",
-      data: {
-        labels: ["Previous Month", "Current Month"],
-        datasets: [
-          {
-            data: [sumForPreviousMonth, sumForCurrentMonth],
-            backgroundColor: ["#088F8F", "#7CFC00"],
-            hoverBackgroundColor: ["#0047AB", "#008000"],
-            borderWidth: 0, // Remove the border
-          },
-        ],
-      },
-      options: {
-        plugins: {
-          legend: {
-            display: true, // Hide the legend
-          },
-          tooltip: {
-            enabled: true,
-            callbacks: {
-              label: (context) => {
-                const labelIndex = context.dataIndex;
-                if (labelIndex === 0) {
-                  return `Previous Month: $${sumForPreviousMonth.toFixed(2)}`;
-                } else if (labelIndex === 1) {
-                  return `Current Month: $${sumForCurrentMonth.toFixed(2)}`;
-                }
-                return '';
-              },
+    const data = {
+      labels: ["Previous Month", "Current Month"],
+      datasets: [
+        {
+          data: [sumForPreviousMonth, sumForCurrentMonth],
+          backgroundColor: ["#088F8F", "#7CFC00"],
+          hoverBackgroundColor: ["#0047AB", "#008000"],
+        },
+      ],
+    };
+  
+    const options = {
+      plugins: {
+        legend: {
+          display: true,
+        },
+        tooltip: {
+          enabled: true,
+          callbacks: {
+            label: (context) => {
+              const label = context.label;
+              const value = context.formattedValue;
+              return `${label}: $${value}`;
             },
           },
         },
       },
+    };
+  
+    pieChartRef.current.chart = new Chart(pieChartCanvas, {
+      type: "pie",
+      data: data,
+      options: options,
     });
   };
   
-  
+
+
+
 
 
   return (
@@ -336,14 +338,14 @@ const Home = () => {
                         <div className="chart-pie pt-4 pb-2">
                           <canvas ref={pieChartRef} id="myPieChart3"></canvas>
                         </div>
-                        <div class="mt-4 text-center small">
+                        {/* <div class="mt-4 text-center small">
                           <span class="mr-2">
                             <i class="fas fa-circle" style={{ color: "#088F8F" }}></i> Previous month
                           </span>
                           <span class="mr-2">
                             <i class="fas fa-circle " style={{ color: "#7CFC00" }}></i> This month
                           </span>
-                        </div>
+                        </div> */}
                       </div>
                     </div>
                   </div>
