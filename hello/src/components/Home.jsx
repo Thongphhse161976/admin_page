@@ -10,15 +10,19 @@ const Home = () => {
   Chart.register(PieController, ArcElement);
   Chart.register(...registerables);
   const pieChartRef = useRef(null);
+  const areaChartRef = useRef(null);
 
   //tinh tong order
   const [orderCount, setOrderCount] = useState(0);
   const [sumForCurrentMonth, setSumForCurrentMonth] = useState(0);
   const [sumForPreviousMonth, setSumForPreviousMonth] = useState(0);
   const [sumForCurrentYear, setSumForCurrentYear] = useState(0);
+  //area chart
+  const [monthlyData, setMonthlyData] = useState([]);
 
   useEffect(() => {
     countOrders();
+    fetchMonthlyData();
   }, []);
 
   useEffect(() => {
@@ -29,6 +33,12 @@ const Home = () => {
   console.log('thang nay' + sumForCurrentMonth);
   console.log('thang truoc' + sumForPreviousMonth);
 
+
+  useEffect(() => {
+    if (monthlyData.length > 0) {
+      createAreaChart();
+    }
+  }, [monthlyData]);
 
   async function countOrders() {
     try {
@@ -209,6 +219,120 @@ const Home = () => {
   };
   
 
+   //area chart
+   const fetchMonthlyData = async () => {
+    try {
+      const response = await orderService.getAllOrders();
+      const orders = response.data;
+      const currentYear = new Date().getFullYear();
+
+      // Initialize an array to store monthly data
+      const monthlyData = Array(12).fill(0);
+
+      // Iterate over each order
+      orders.forEach((order) => {
+        const orderDate = new Date(order.orderDate);
+        const orderYear = orderDate.getFullYear();
+        const orderMonth = orderDate.getMonth();
+
+        // Check if the order belongs to the current year
+        if (orderYear === currentYear) {
+          // Add the order's total price to the corresponding month's data
+          monthlyData[orderMonth] += order.total;
+        }
+      });
+
+      setMonthlyData(monthlyData);
+    } catch (error) {
+      console.error("Error fetching orders:", error);
+    }
+  };
+
+  const createAreaChart = () => {
+    const areaChartCanvas = areaChartRef.current.getContext("2d");
+
+    if (areaChartRef.current.chart) {
+      areaChartRef.current.chart.destroy();
+    }
+
+    const data = {
+      labels: [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December",
+      ],
+      datasets: [
+        {
+          label: "Income",
+          data: monthlyData,
+          backgroundColor: "rgba(54, 162, 235, 0.2)",
+          borderColor: "rgba(54, 162, 235, 1)",
+          borderWidth: 2,
+          pointBackgroundColor: "rgba(54, 162, 235, 1)",
+          pointBorderColor: "#fff",
+          pointRadius: 4,
+          pointHoverRadius: 6,
+        },
+      ],
+    };
+
+    const options = {
+      scales: {
+        x: {
+          grid: {
+            display: false,
+          },
+        },
+        y: {
+          beginAtZero: true,
+          grid: {
+            borderDash: [2],
+            borderDashOffset: [2],
+            drawBorder: false,
+            color: "rgba(0, 0, 0, 0.05)",
+            zeroLineColor: "rgba(0, 0, 0, 0.1)",
+          },
+          ticks: {
+            callback: (value) => {
+              if (value >= 1000) {
+                return `$${value / 1000}k`;
+              }
+              return `$${value}`;
+            },
+          },
+        },
+      },
+      plugins: {
+        tooltip: {
+          enabled: true,
+          callbacks: {
+            label: (context) => {
+              const label = context.dataset.label;
+              const value = context.formattedValue;
+              return `${label}: $${value}`;
+            },
+          },
+        },
+      },
+    };
+
+    areaChartRef.current.chart = new Chart(areaChartCanvas, {
+      type: "line",
+      data: data,
+      options: options,
+    });
+  };
+
+
 
 
 
@@ -323,7 +447,7 @@ const Home = () => {
                       {/* Card Body */}
                       <div className="card-body">
                         <div className="chart-area">
-                          <canvas id="myAreaChart" />
+                          <canvas ref={areaChartRef} id="myAreaChart" />
                         </div>
                       </div>
                     </div>
