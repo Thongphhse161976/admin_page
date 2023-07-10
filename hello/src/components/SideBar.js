@@ -121,18 +121,19 @@ const SideBar = () => {
                     </div>
                 </li>
 
-                {/* <li className="nav-item">
-                    <a className="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo2" aria-expanded="true" aria-controls="collapseTwo">
-                    <i class="fas fa-vector-square"></i>
-                        <span>Category </span>
+                <li className="nav-item">
+                    <a className="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities7" aria-expanded="true" aria-controls="collapseUtilities">
+                        <i class="fas fa-star"></i>
+                        <span>Rating </span>
                     </a>
-                    <div id="collapseTwo2" className="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div id="collapseUtilities7" className="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
                         <div className="bg-white py-2 collapse-inner rounded">
-                            <Link className="collapse-item" to="/list_categories">List Categories</Link>
+                            <Link className="collapse-item" to="/list_rating">List Rating</Link>
+
                         </div>
                     </div>
-                </li> */}
 
+                </li>
 
             </ul>
             {/* End of Sidebar */}

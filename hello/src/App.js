@@ -13,7 +13,7 @@ import AddStore from './components/stores/AddStore';
 import AddUser from './components/users/AddUser';
 import AddCategory from './components/categories/AddCategory';
 import EditStore from './components/stores/EditStore';
-
+import ListRating from './components/ratings/ListRating';
 function App() {
   return (
 
@@ -31,7 +31,7 @@ function App() {
         <Route path='/list_payments' element={<ListPayment />}></Route>
         <Route path='/list_reviews' element={<ListReview />}></Route>
         <Route path='/list_categories' element={<ListCategories />}></Route>
-
+        <Route path='/list_rating' element={<ListRating />}></Route>
       </Routes>
 
     </>
