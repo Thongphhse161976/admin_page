@@ -3,6 +3,7 @@ import App from "../App";
 import Header from "./Header";
 import SideBar from "./SideBar";
 import orderService from "../service/order.service";
+import userService from "../service/user.service";
 import { Chart, PieController, ArcElement, registerables } from "chart.js";
 
 
@@ -14,6 +15,7 @@ const Home = () => {
 
   //tinh tong order
   const [orderCount, setOrderCount] = useState(0);
+  const [userCount, setUserCount] = useState(0);
   const [sumForCurrentMonth, setSumForCurrentMonth] = useState(0);
   const [sumForPreviousMonth, setSumForPreviousMonth] = useState(0);
   const [sumForCurrentYear, setSumForCurrentYear] = useState(0);
@@ -22,6 +24,7 @@ const Home = () => {
 
   useEffect(() => {
     countOrders();
+    countUsers();
     fetchMonthlyData();
   }, []);
 
@@ -54,6 +57,20 @@ const Home = () => {
     }
   }
 
+
+  async function countUsers() {
+    try {
+      const response = await userService.getAllUsers();
+      const users = response.data;
+      const userCount = users.length;
+
+      // console.log("Total users:", userCount);
+
+      setUserCount(userCount);
+    } catch (error) {
+      console.error("Error counting users:", error);
+    }
+  }
   //Income by month
   const fetchOrdersAndCalculateSum = async () => {
     try {
@@ -424,8 +441,8 @@ const Home = () => {
                         <div className="row no-gutters align-items-center">
                           <div className="col mr-2">
                             <div className="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                              Pending Requests</div>
-                            <div className="h5 mb-0 font-weight-bold text-gray-800">18</div>
+                              Users</div>
+                            <div className="h5 mb-0 font-weight-bold text-gray-800">{userCount}</div>
                           </div>
                           <div className="col-auto">
                             <i className="fas fa-comments fa-2x text-gray-300" />
