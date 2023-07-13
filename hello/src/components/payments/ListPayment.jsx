@@ -8,7 +8,7 @@ const ListPayment = () => {
   const [paymentList, setPaymentList] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(0);
-  const [paymentsPerPage] = useState(10);
+  const [paymentsPerPage] = useState(5);
 
   useEffect(() => {
     paymentService.getALlPayments()

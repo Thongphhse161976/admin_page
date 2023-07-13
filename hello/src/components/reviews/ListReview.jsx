@@ -8,7 +8,7 @@ const ListReview = () => {
   const [reviewList, setReviewList] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(0);
-  const [reviewsPerPage] = useState(10);
+  const [reviewsPerPage] = useState(5);
 
   useEffect(() => {
     reviewService

@@ -8,7 +8,7 @@ const ListUsers = () => {
   const [userList, setUserList] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(0);
-  const [usersPerPage] = useState(10);
+  const [usersPerPage] = useState(5);
 
   useEffect(() => {
     userService

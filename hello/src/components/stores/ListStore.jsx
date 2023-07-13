@@ -9,7 +9,7 @@ const ListStore = () => {
   const [storeList, setStoreList] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(0);
-  const [storesPerPage] = useState(10);
+  const [storesPerPage] = useState(5);
 
   useEffect(() => {
     storeService

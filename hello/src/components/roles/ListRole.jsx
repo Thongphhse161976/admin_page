@@ -8,7 +8,7 @@ const ListRole = () => {
     const [roleList, setRoleList] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
     const [currentPage, setCurrentPage] = useState(0);
-    const [itemsPerPage] = useState(10);
+    const [itemsPerPage] = useState(5);
 
 
     useEffect(() => {
