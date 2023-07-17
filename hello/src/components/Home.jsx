@@ -205,7 +205,7 @@ const Home = () => {
         {
           data: [sumForPreviousMonth, sumForCurrentMonth],
           backgroundColor: ["#088F8F", "#7CFC00"],
-          hoverBackgroundColor: ["#0047AB", "#008000"],
+          hoverBackgroundColor: ["#088F8F", "#7CFC00"],
         },
       ],
     };

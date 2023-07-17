@@ -4,7 +4,7 @@ const Footer = () => {
     return (
         <div>
             <footer class="main-footer">
-                <strong>Nha Trang</strong>
+                <strong>Vinhome Ecommerce</strong>
                 
             </footer>
 
