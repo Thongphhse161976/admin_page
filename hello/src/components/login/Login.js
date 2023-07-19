@@ -3,18 +3,25 @@ import React, { useEffect } from 'react';
 import { GoogleButton } from 'react-google-button';
 import UserAuth  from '../login/AuthContext';
 import { useNavigate } from 'react-router-dom';
+
 import orderService from '../../service/order.service';
 import './style.css';
+
+
 const Login = ({ setIsLoggedIn }) => {
   const { googleSignIn, user } = UserAuth();
   const navigate = useNavigate();
+
+  // useEffect(() => {
+  // localStorage.setItem('dataKey', JSON.stringify(user));
+  // }, [user]);
 
   const handleGoogleSignIn = async () => {
     try {
       await googleSignIn();
       setIsLoggedIn(true); // Update the isLoggedIn state
       localStorage.setItem('isLoggedIn', 'true');
-
+      
       
     navigate('/home');
       

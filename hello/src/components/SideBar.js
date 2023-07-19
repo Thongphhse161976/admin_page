@@ -16,7 +16,7 @@ const SideBar = () => {
                 <hr className="sidebar-divider my-0" />
                 {/* Nav Item - Dashboard */}
                 <li className="nav-item active">
-                    <Link className="nav-link" to="/">
+                    <Link className="nav-link" to="/home">
                         <i className="fas fa-fw fa-tachometer-alt" />
                         <span>Dashboard</span></Link>
                 </li>
@@ -135,7 +135,7 @@ const SideBar = () => {
 
                 </li>
 
-                <li className="nav-item">
+                {/* <li className="nav-item">
                     <a className="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities8" aria-expanded="true" aria-controls="collapseUtilities">
                         <i class="fas fa-link"></i>
                         <span>Role</span>
@@ -147,7 +147,7 @@ const SideBar = () => {
                         </div>
                     </div>
 
-                </li>
+                </li> */}
 
                 <li className="nav-item">
                     <a className="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities33" aria-expanded="true" aria-controls="collapseUtilities">

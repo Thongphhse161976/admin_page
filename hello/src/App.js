@@ -21,12 +21,7 @@ import Profile from './components/login/Profile';
 import { AuthContextProvider } from './components/login/AuthContext';
 function App() {
 
-  const [isLoggedIn, setIsLoggedIn] = useState(true); // Add a state for login status
-
-  useEffect(() => {
-
-
-  }, []);
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
   return (
 
     <>
@@ -35,7 +30,7 @@ function App() {
           <Route path="/" element={<Navigate to="/login" />} />
           <Route
             path="/login"
-            element={<Login setIsLoggedIn={setIsLoggedIn} />} // Pass setIsLoggedIn prop to Login component
+            element={<Login setIsLoggedIn={setIsLoggedIn} />}
           />
           {isLoggedIn && (
             <>
@@ -52,7 +47,7 @@ function App() {
               <Route path='/list_reviews' element={<ListReview />}></Route>
               <Route path='/list_categories' element={<ListCategories />}></Route>
               <Route path='/list_rating' element={<ListRating />}></Route>
-              <Route path='/list_role' element={<ListRole />}></Route>
+              {/* <Route path='/list_role' element={<ListRole />}></Route> */}
               <Route path='/profile' element={<Profile />}></Route>
             </>
 

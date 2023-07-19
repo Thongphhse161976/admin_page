@@ -1,19 +1,27 @@
 import axios from "axios";
-
+import UserAuth from "../components/login/AuthContext";
+import { useEffect } from "react";
 
 const BASE_API_URL = "https://vinhomesecommercewebapi.azurewebsites.net/api/v1"
+const user = JSON.parse(localStorage.getItem('dataKey'));
 class CategoryService{
     
     getAllCategories()
     {
-        return axios.get(BASE_API_URL + "/Category");
+        return axios.get(BASE_API_URL + "/Category",{
+            headers: {
+                'Access-Control-Allow-Origin': '*',
+                "Authorization" : `Bearer ${user.stsTokenManager.accessToken}`,
+            }
+        });
 
     }
 
     async saveCategory(category) {
-        const response = axios.post(BASE_API_URL + "/Category", category, {
+        const response = axios.post(BASE_API_URL + "/Category", category,{
             headers: {
                 'Access-Control-Allow-Origin': '*',
+                "Authorization" : `Bearer ${user.stsTokenManager.accessToken}`,
             }
         });
         response.headers = {
