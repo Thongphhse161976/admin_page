@@ -3,7 +3,6 @@ import UserAuth from "../components/login/AuthContext";
 
 const BASE_API_URL = "https://vinhomesecommercewebapi.azurewebsites.net/api/v1"
 const user = JSON.parse(localStorage.getItem('dataKey'));
-console.log("User Tam thuong ",user.stsTokenManager.accessToken);
 class OrderService{
     
     getAllOrders()
