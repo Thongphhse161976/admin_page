@@ -3,6 +3,7 @@ import Header from '../Header';
 import SideBar from '../SideBar';
 import orderService from '../../service/order.service';
 import ReactPaginate from 'react-paginate';
+import { Link } from 'react-router-dom';
 
 const ListOrders = () => {
   const [orderList, setOrderList] = useState([]);
@@ -86,6 +87,7 @@ const ListOrders = () => {
                           <th>Status</th>
                           <th>Customer Id</th>
                           <th>Store Id</th>
+                          <th>Detail</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -98,6 +100,10 @@ const ListOrders = () => {
                             <td>{order.status.toString()}</td>
                             <td>{order.customerId.toString()}</td>
                             <td>{order.storeId.toString()}</td>
+                            <td>
+                              <Link to={`/orderdetail/${order.id}`} className='btn btn-primary'>Detail</Link>
+                            </td>
+
                           </tr>
                         ))}
                       </tbody>

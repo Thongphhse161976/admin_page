@@ -15,6 +15,15 @@ class OrderService{
         });
 
     }
+
+    getOrderDetail(orderId){
+        return axios.get(BASE_API_URL +"/Order/" + orderId + "?include=OrderDetails",{
+            headers: {
+                'Access-Control-Allow-Origin': '*',
+                "Authorization" : `Bearer ${user.stsTokenManager.accessToken}`,
+            }
+        });
+    }
 }
 
 export default new OrderService();

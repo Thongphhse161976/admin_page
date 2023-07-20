@@ -18,6 +18,7 @@ import ListRating from './components/ratings/ListRating';
 import ListRole from './components/roles/ListRole';
 import Login from './components/login/Login';
 import Profile from './components/login/Profile';
+import OrderDetail from './components/orders/OrderDetail';
 import { AuthContextProvider } from './components/login/AuthContext';
 function App() {
 
@@ -49,6 +50,7 @@ function App() {
               <Route path='/list_rating' element={<ListRating />}></Route>
               {/* <Route path='/list_role' element={<ListRole />}></Route> */}
               <Route path='/profile' element={<Profile />}></Route>
+              <Route path='/orderdetail/:orderId' element={<OrderDetail />}></Route>
             </>
 
           )}
