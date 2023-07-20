@@ -87,7 +87,7 @@ const ListUsers = () => {
                           <th>Firebase Id</th>
                           <th>Status</th>
                           <th>Role</th>
-                          <th>Store Id</th>
+                     
                         </tr>
                       </thead>
                       <tbody>
@@ -101,8 +101,8 @@ const ListUsers = () => {
                             <td>{user.email}</td>
                             <td>{user.firebaseUID}</td>
                             <td>{user.status}</td>
-                            <td>{user.roleId}</td>
-                            <td>{user.storeId}</td>
+                            <td>{user.role}</td>
+                            
                           </tr>
                         ))}
                       </tbody>

@@ -114,11 +114,11 @@ const SideBar = () => {
                             <Link className="collapse-item" to="/list_users">List Users</Link>
                         </div>
                     </div>
-                    {/* <div id="collapseTwo" className="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div id="collapseTwo" className="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                         <div className="bg-white py-2 collapse-inner rounded">
                             <Link className="collapse-item" to="/add_user">Add User</Link>
                         </div>
-                    </div> */}
+                    </div>
                 </li>
 
                 <li className="nav-item">

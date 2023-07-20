@@ -89,7 +89,7 @@ const AddStore = () => {
                 const allUsers = response.data;
 
                 // Filter the users based on the roleId
-                const filteredUsers = allUsers.filter((user) => user.roleId === "17ae2be6-2c6a-5cab-3bcb-6f55ff55ddab");
+                const filteredUsers = allUsers.filter((user) => user.role == 2);
 
                 setUsers(filteredUsers);
             } catch (error) {
