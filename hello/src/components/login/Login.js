@@ -12,9 +12,10 @@ const Login = ({ setIsLoggedIn }) => {
   const { googleSignIn, user } = UserAuth();
   const navigate = useNavigate();
 
-  // useEffect(() => {
-  // localStorage.setItem('dataKey', JSON.stringify(user));
-  // }, [user]);
+  useEffect(() => {
+      localStorage.setItem('dataKey', JSON.stringify(user));
+      console.log(JSON.stringify(user));
+  }, [user]);
 
   const handleGoogleSignIn = async () => {
     try {

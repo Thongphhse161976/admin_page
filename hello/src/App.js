@@ -36,7 +36,7 @@ function App() {
             <>
               <Route path='/home' element={<Home />}></Route>
               <Route path='/list_users' element={<ListUsers />}></Route>
-              <Route path='/add_user' element={<AddUser />}></Route>
+              {/* <Route path='/add_user' element={<AddUser />}></Route> */}
               <Route path='/list_orders' element={<ListOrders />}></Route>
               <Route path='/list_categories' element={<ListCategories />}></Route>
               <Route path='/add_category' element={<AddCategory />}></Route>
