@@ -38,12 +38,15 @@ const Login = ({ setIsLoggedIn }) => {
   }, [user]);
 
   return (
-    <div>
-      <div className='max-w-[240px] m-auto py-4'>
-        <div className='google-button'>
-        <h1 className='text-center text-3xl font-bold py-8'>Login</h1>
-        <GoogleButton onClick={handleGoogleSignIn} />
+    
+    <div class="center-content">
+      <div class="board">
+        <div>
+          <h1 class="text-center text-3x2 font-bold py-8" >Login</h1>
+          <p></p>
+          <div><GoogleButton onClick={handleGoogleSignIn} /></div>
         </div>
+
       </div>
     </div>
   );
