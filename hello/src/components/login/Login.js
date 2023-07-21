@@ -44,6 +44,20 @@ const Login = ({ setIsLoggedIn }) => {
         <div>
           <h1 class="text-center text-3x2 font-bold py-8" >Login</h1>
           <p></p>
+          <form>
+            <div>
+              <div className="form-group">
+                <label>UserName</label>
+                <input type="text" name="username" className="form-control"/>
+              </div>    
+              <div className="form-group">
+                <label>Email</label>
+                <input type="text" name="email" className="form-control"  />
+              </div>
+              <button type="submit" className="btn btn-primary">Login</button>
+            </div>
+          </form>
+          <p class="text-center">Or</p>
           <div><GoogleButton onClick={handleGoogleSignIn} /></div>
         </div>
 

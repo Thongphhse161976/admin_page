@@ -12,7 +12,7 @@
             name: "",
             email: "",
             photoUrl: "",
-            firebaseUID: "",
+            firebaseUID: "goB5YDQcgAZKO60LGCZcYBQuJ9g2",
             role: "",
             status: ""
         });
@@ -142,8 +142,8 @@
                                         </div>
 
                                         <div className="form-group">
-                                            <label htmlFor="eexampleInputPassword1">Firebase Id</label>
-                                            <input type="text" name="firebaseUID" className="form-control"id="exampleInputPassword1" 
+                                            
+                                            <input type="hidden" name="firebaseUID" className="form-control"id="exampleInputPassword1" 
                                                 value={user.firebaseUID} onChange={(e) => handleChange(e)} />
                                             
                                         </div>

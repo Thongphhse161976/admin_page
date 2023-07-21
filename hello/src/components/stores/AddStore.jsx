@@ -168,7 +168,7 @@ const AddStore = () => {
                                                 <option key={user.id} value={user.id}>{user.name}</option>
                                             ))}
                                         </select>
-                                        <p>Selected value: {selectedValue}</p>
+                                        
                                     </div>
                                     <div className="form-group">
                                         <label htmlFor="exampleInputPassword1">Photo</label>
